@@ -306,7 +306,7 @@
 
 
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .hero-proof-line {
         flex-direction: column;
         gap: 8px;
@@ -322,6 +322,7 @@
     .svc-card {
         grid-template-columns: 1fr;
         gap: 28px;
+        padding: 28px;
     }
 
     .svc-left {
@@ -335,5 +336,24 @@
         border-top: 1px solid var(--border);
         padding-left: 0;
         padding-top: 24px;
+    }
+
+    .pkg-card {
+        padding: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .svc-card {
+        padding: 20px;
+    }
+
+    .pkg-card {
+        padding: 24px 20px;
+    }
+
+    .services-trust-pill {
+        padding: 6px 12px;
+        font-size: 0.78rem;
     }
 }

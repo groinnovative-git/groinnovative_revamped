@@ -479,12 +479,30 @@ p {
   }
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .section-sm {
+    padding: 48px 0;
+  }
+}
+
 @media (max-width: 600px) {
 
   .grid-2,
   .grid-3,
   .grid-4 {
     grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .container {
+    padding: 0 16px;
   }
 }
 

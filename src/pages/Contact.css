@@ -202,12 +202,26 @@
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 640px) {
     .form-row {
         grid-template-columns: 1fr;
     }
 
     .contact-form-wrap {
         padding: 28px 20px;
+    }
+
+    .contact-grid {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form-wrap {
+        padding: 24px 16px;
+    }
+
+    .contact-grid {
+        gap: 32px;
     }
 }

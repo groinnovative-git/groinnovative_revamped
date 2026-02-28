@@ -395,6 +395,11 @@
     background: var(--darker);
 }
 
+/* Allow eye+gradient line to wrap on small screens */
+.hero-nowrap-line {
+    white-space: nowrap;
+}
+
 /* ── STATS ── */
 .stats-section {
     padding: 60px 0;
@@ -529,6 +534,29 @@
     }
 }
 
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 90px 0 60px 0;
+    }
+
+    .hero-nowrap-line {
+        white-space: normal;
+    }
+
+    .stat-num {
+        font-size: 2.5rem;
+    }
+
+    .trust-pills {
+        gap: 8px;
+    }
+
+    .trust-pills span {
+        font-size: 0.78rem;
+        padding: 5px 10px;
+    }
+}
+
 @media (max-width: 600px) {
     .stats-grid {
         grid-template-columns: 1fr;
@@ -549,6 +577,14 @@
     .hero-actions .btn {
         width: 100%;
         justify-content: center;
+    }
+
+    .cta-banner-inner {
+        padding: 32px 20px;
+    }
+
+    .hero-grid-wrapper.CenteredLayout {
+        min-height: auto;
     }
 }
 

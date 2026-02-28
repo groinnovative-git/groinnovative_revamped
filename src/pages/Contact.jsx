@@ -32,8 +32,8 @@ export default function Contact() {
             <section className="page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
-                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '160px' }}>
-                    <div className="hero-grid-wrapper CenteredLayout">
+                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 840 }}>
                             <div
                                 className="badge reveal"

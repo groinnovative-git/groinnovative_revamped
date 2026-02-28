@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './EyeFollowIcon.css';
 
 export default function EyeFollowIcon() {
@@ -16,6 +16,69 @@ export default function EyeFollowIcon() {
     const currentPupilL = useRef({ x: 0, y: 0, scale: 1 });
     const currentPupilR = useRef({ x: 0, y: 0, scale: 1 });
 
+    // ── Blink state (mobile/tablet only) ──
+    const [isMobile, setIsMobile] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(max-width: 1023px)').matches;
+    });
+    const [reducedMotion, setReducedMotion] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    });
+
+    // Listen for viewport and reduced-motion changes
+    useEffect(() => {
+        const mobileQuery = window.matchMedia('(max-width: 1023px)');
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        const handleMobileChange = (e) => setIsMobile(e.matches);
+        const handleMotionChange = (e) => setReducedMotion(e.matches);
+
+        mobileQuery.addEventListener('change', handleMobileChange);
+        motionQuery.addEventListener('change', handleMotionChange);
+
+        return () => {
+            mobileQuery.removeEventListener('change', handleMobileChange);
+            motionQuery.removeEventListener('change', handleMotionChange);
+        };
+    }, []);
+
+    // ── Blink interval (mobile/tablet only, respects reduced motion) ──
+    useEffect(() => {
+        if (!isMobile || reducedMotion) return;
+
+        const doBlink = () => {
+            const leftEye = leftEyeRef.current;
+            const rightEye = rightEyeRef.current;
+            if (!leftEye || !rightEye) return;
+
+            // Close eyelids (120ms)
+            leftEye.style.transition = 'transform 120ms ease-in';
+            rightEye.style.transition = 'transform 120ms ease-in';
+            leftEye.style.transform = 'scaleY(0.1)';
+            rightEye.style.transform = 'scaleY(0.1)';
+
+            // Stay closed (60ms), then open (120ms)
+            setTimeout(() => {
+                leftEye.style.transition = 'transform 120ms ease-out';
+                rightEye.style.transition = 'transform 120ms ease-out';
+                leftEye.style.transform = 'scaleY(1)';
+                rightEye.style.transform = 'scaleY(1)';
+
+                // Reset transition after open completes
+                setTimeout(() => {
+                    if (leftEye) leftEye.style.transition = 'transform 0.1s ease';
+                    if (rightEye) rightEye.style.transition = 'transform 0.1s ease';
+                }, 130);
+            }, 180); // 120ms close + 60ms hold
+        };
+
+        const intervalId = setInterval(doBlink, 3000);
+
+        return () => clearInterval(intervalId);
+    }, [isMobile, reducedMotion]);
+
+    // ── Eye tracking (desktop mouse follow) ──
     useEffect(() => {
         // Feature detect touch devices
         const isTouch = window.matchMedia('(pointer: coarse)').matches;

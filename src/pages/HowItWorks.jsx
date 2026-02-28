@@ -2,31 +2,32 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
+import { Search, PenTool, Code, Bug, Rocket, LifeBuoy } from 'lucide-react'
 import './HowItWorks.css'
 
 const steps = [
     {
-        n: '01', icon: '🔍', title: 'Discovery & Scoping',
+        n: '01', icon: Search, title: 'Discovery & Scoping',
         desc: 'We start with a detailed conversation about your goals, timeline, and budget. We map out the project scope, technologies, and deliverables in a clear proposal.'
     },
     {
-        n: '02', icon: '🎨', title: 'Design & Prototyping',
+        n: '02', icon: PenTool, title: 'Design & Prototyping',
         desc: 'Our designers create wireframes and high-fidelity mockups. You see exactly what you\'re getting before a single line of code is written.'
     },
     {
-        n: '03', icon: '⚙️', title: 'Agile Development',
+        n: '03', icon: Code, title: 'Agile Development',
         desc: 'Development in 2-week sprints. You get weekly demos, can give feedback anytime, and always know exactly where your project stands.'
     },
     {
-        n: '04', icon: '🧪', title: 'Testing & QA',
+        n: '04', icon: Bug, title: 'Testing & QA',
         desc: 'Rigorous automated and manual testing across devices and browsers. Performance benchmarks, security reviews, and bug-free deployment.'
     },
     {
-        n: '05', icon: '🚀', title: 'Launch & Deploy',
+        n: '05', icon: Rocket, title: 'Launch & Deploy',
         desc: 'We handle the full deployment to your cloud infrastructure, set up monitoring, and ensure a smooth go-live with zero downtime.'
     },
     {
-        n: '06', icon: '🤝', title: 'Support & Growth',
+        n: '06', icon: LifeBuoy, title: 'Support & Growth',
         desc: 'Your product doesn\'t stop at launch. We offer ongoing maintenance, feature additions, and growth consulting as your business scales.'
     },
 ]
@@ -53,8 +54,8 @@ export default function HowItWorks() {
             <section className="page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
-                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '160px' }}>
-                    <div className="hero-grid-wrapper CenteredLayout">
+                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 840 }}>
                             <motion.div
                                 variants={fadeInUp}
@@ -99,18 +100,23 @@ export default function HowItWorks() {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.1 }}
                     >
-                        {steps.map((s) => (
-                            <motion.div
-                                key={s.n}
-                                variants={stepVariants}
-                                className="step-card"
-                            >
-                                <div className="step-num">{s.n}</div>
-                                <div className="step-icon">{s.icon}</div>
-                                <h3>{s.title}</h3>
-                                <p>{s.desc}</p>
-                            </motion.div>
-                        ))}
+                        {steps.map((s) => {
+                            const Icon = s.icon;
+                            return (
+                                <motion.div
+                                    key={s.n}
+                                    variants={stepVariants}
+                                    className="step-card"
+                                >
+                                    <div className="step-num">{s.n}</div>
+                                    <div className="step-icon-badge">
+                                        <Icon size={20} strokeWidth={1.8} />
+                                    </div>
+                                    <h3>{s.title}</h3>
+                                    <p>{s.desc}</p>
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 </div>
             </section>

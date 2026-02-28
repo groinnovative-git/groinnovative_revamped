@@ -137,7 +137,7 @@ export default function Home() {
                             </div>
                             <h1 className="hero-headline reveal reveal-delay-1">
                                 AI-Driven Software &<br />
-                                <span style={{ whiteSpace: 'nowrap' }}>
+                                <span className="hero-nowrap-line">
                                     <EyeFollowIcon />
                                     <span className="gradient-text">Growth Systems</span>
                                 </span><br />

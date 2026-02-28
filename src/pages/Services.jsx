@@ -89,8 +89,8 @@ export default function Services() {
                     }}
                 />
 
-                <div className="container relative z-[2]" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '100px' }}>
-                    <div className="hero-grid-wrapper CenteredLayout">
+                <div className="container relative z-[2]" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 880 }}>
 
                             {/* Pill badge */}
