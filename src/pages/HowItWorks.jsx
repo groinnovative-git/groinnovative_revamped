@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import ParticleCanvas from '../components/ParticleCanvas'
 import './HowItWorks.css'
 
 const steps = [
@@ -47,6 +48,7 @@ export default function HowItWorks() {
     return (
         <div className="page-enter">
             <section className="page-hero">
+                <ParticleCanvas />
                 <div className="page-hero-bg" />
                 <div className="container">
                     <div className="badge reveal"><span className="badge-dot" />Our Process</div>
