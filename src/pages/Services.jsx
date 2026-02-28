@@ -89,7 +89,7 @@ export default function Services() {
                     }}
                 />
 
-                <div className="container relative z-[2]" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
+                <div className="container relative z-[2]" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px', paddingLeft: 16, paddingRight: 16 }}>
                     <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 880 }}>
 
@@ -116,17 +116,19 @@ export default function Services() {
                                 initial="hidden"
                                 animate="visible"
                                 transition={{ delay: 0.1 }}
-                                className="hero-headline"
+                                className="hero-headline services-hero-headline"
                                 style={{
-                                    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+                                    fontSize: 'clamp(1.85rem, 5vw, 3.6rem)',
                                     fontWeight: 700,
-                                    lineHeight: 1.08,
+                                    lineHeight: 1.12,
                                     letterSpacing: '-0.025em',
                                     marginBottom: 24,
+                                    overflowWrap: 'break-word',
+                                    wordBreak: 'break-word',
                                 }}
                             >
                                 High-Performance Websites,{' '}
-                                <span className="gradient-text">Software&nbsp;&amp;&nbsp;Growth&nbsp;Systems</span>
+                                <span className="gradient-text">Software & Growth Systems</span>
                             </motion.h1>
 
                             {/* Paragraph */}

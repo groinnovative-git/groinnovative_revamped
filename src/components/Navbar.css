@@ -13,19 +13,10 @@
     transition: border-color 0.3s, box-shadow 0.3s, background 0.4s;
 }
 
-:root[data-theme='light'] .gi-nav {
-    background: rgba(255, 255, 255, 0.5);
-}
-
 .gi-nav.scrolled {
     border-color: var(--border);
     box-shadow: var(--shadow-sm);
     background: rgba(10, 10, 10, 0.85);
-}
-
-:root[data-theme='light'] .gi-nav.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .gi-nav-inner {

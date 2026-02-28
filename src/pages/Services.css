@@ -3,6 +3,7 @@
     background: transparent;
     position: relative;
     overflow: hidden;
+    overflow-x: hidden;
 }
 
 .page-hero-bg {
@@ -353,7 +354,30 @@
     }
 
     .services-trust-pill {
-        padding: 6px 12px;
-        font-size: 0.78rem;
+        padding: 5px 10px;
+        font-size: 0.74rem;
+        gap: 5px;
+    }
+
+    .services-trust-pill-icon {
+        width: 13px;
+        height: 13px;
+    }
+
+    .services-hero-headline {
+        font-size: clamp(1.65rem, 7vw, 2.2rem) !important;
+        line-height: 1.15 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .services-hero-headline {
+        font-size: clamp(1.5rem, 6.5vw, 1.85rem) !important;
+        line-height: 1.18 !important;
+    }
+
+    .services-trust-pill {
+        padding: 4px 9px;
+        font-size: 0.72rem;
     }
 }
