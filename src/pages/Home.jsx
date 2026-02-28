@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import ParticleCanvas from '../components/ParticleCanvas'
+import EyeFollowIcon from '../components/EyeFollowIcon'
 import './Home.css'
 
 /* Scroll reveal hook */
@@ -76,22 +77,25 @@ export default function Home() {
                         <div className="hero-content centered">
                             <div className="badge reveal">
                                 <span className="badge-dot" />
-                                Trusted by 50+ businesses worldwide
+                                ACCELERATE YOUR AI WORKFLOWS
                             </div>
                             <h1 className="hero-headline reveal reveal-delay-1">
-                                We Build Software<br />
-                                <span className="gradient-text">That Scales.</span>
+                                AI-Driven Software &<br />
+                                <span style={{ whiteSpace: 'nowrap' }}>
+                                    <EyeFollowIcon />
+                                    <span className="gradient-text">Growth Systems</span>
+                                </span><br />
+                                for Modern Businesses
                             </h1>
                             <p className="hero-sub reveal reveal-delay-2">
-                                Gro Innovative is a full-stack software development company delivering world-class web apps,
-                                mobile solutions, cloud infrastructure, and digital marketing for ambitious businesses.
+                                We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products — engineered for performance, visibility, and long-term growth.
                             </p>
                             <div className="hero-actions reveal reveal-delay-3">
-                                <Link to="/services" className="btn btn-primary btn-lg">
-                                    Explore Services <span className="arr">→</span>
+                                <Link to="/services" className="btn btn-primary">
+                                    ✔ Start a Project
                                 </Link>
-                                <Link to="/contact" className="btn btn-secondary btn-lg">
-                                    Talk to Us
+                                <Link to="/contact" className="btn btn-secondary">
+                                    ✔ Explore Services
                                 </Link>
                             </div>
                             {/* Floating trust pills */}

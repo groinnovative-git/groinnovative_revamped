@@ -51,40 +51,39 @@ export default function Hero() {
             <div className="hero-content">
                 <div className="badge hero-badge" ref={badgeRef}>
                     <span className="badge-dot" />
-                    PREMIUM SOFTWARE ENGINEERING
+                    ACCELERATE YOUR AI WORKFLOWS
                 </div>
 
                 <h1 className="hero-title">
-                    <span className="hero-line" ref={title1Ref}>Zero Friction.</span>
-                    <span className="hero-line hero-line-accent" ref={title2Ref}>Maximum Velocity.</span>
-                    <span className="hero-line hero-line-dim" ref={title3Ref}>Infinite Scale.</span>
+                    <span className="hero-line" ref={title1Ref}>AI-Driven Software &</span>
+                    <span className="hero-line hero-line-accent" ref={title2Ref}>Growth Systems</span>
+                    <span className="hero-line hero-line-dim" ref={title3Ref}>for Modern Businesses</span>
                 </h1>
 
                 <p className="hero-sub" ref={subRef}>
-                    We engineer the software that powers the world's most ambitious companies — automating complexity, eliminating bottlenecks, and delivering at a pace your competitors can't match.
+                    We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products — engineered for performance, visibility, and long-term growth.
                 </p>
 
                 <div className="hero-btns" ref={btnsRef}>
                     <div className="magnet-wrap" ref={magnet1.ref} onMouseMove={magnet1.handleMouseMove} onMouseLeave={magnet1.handleMouseLeave}>
                         <a href="#contact" className="btn btn-primary" onClick={e => { e.preventDefault(); scrollTo('#contact') }}>
-                            <span className="cta-label">Start Your Project</span>
-                            <span className="cta-arrow">→</span>
+                            <span className="cta-label">✔ Start a Project</span>
                         </a>
                     </div>
                     <div className="magnet-wrap" ref={magnet2.ref} onMouseMove={magnet2.handleMouseMove} onMouseLeave={magnet2.handleMouseLeave}>
                         <a href="#features" className="btn btn-secondary" onClick={e => { e.preventDefault(); scrollTo('#features') }}>
-                            Explore Services
+                            ✔ Explore Services
                         </a>
                     </div>
                 </div>
 
                 {/* Live stats strip */}
                 <div className="hero-micro-stats">
-                    <span className="ms-item"><span className="ms-dot green" />500+ Projects Delivered</span>
+                    <span className="ms-item"><span className="ms-dot green" />Free Consultation</span>
                     <span className="ms-sep">·</span>
-                    <span className="ms-item"><span className="ms-dot green" />98% Satisfaction Rate</span>
+                    <span className="ms-item"><span className="ms-dot green" />Scalable Solutions</span>
                     <span className="ms-sep">·</span>
-                    <span className="ms-item"><span className="ms-dot green" />200+ Global Clients</span>
+                    <span className="ms-item"><span className="ms-dot green" />NDA Protected</span>
                 </div>
             </div>
 

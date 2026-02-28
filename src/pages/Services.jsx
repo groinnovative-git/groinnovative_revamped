@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import ParticleCanvas from '../components/ParticleCanvas'
 import './Services.css'
 
 const services = [
@@ -62,10 +63,11 @@ export default function Services() {
         <div className="page-enter">
             {/* Page Header */}
             <section className="page-hero">
+                <ParticleCanvas />
                 <div className="page-hero-bg" />
                 <div className="container">
                     <div className="badge badge-accent reveal"><span className="badge-dot" style={{ background: 'var(--accent)' }} />What We Offer</div>
-                    <h1 className="reveal reveal-delay-1">Full-Spectrum IT Services<br /><span className="gradient-text">for Modern Businesses</span></h1>
+                    <h1 className="reveal reveal-delay-1">Enterprise-Grade Digital Services<br /><span className="gradient-text">for Modern Businesses</span></h1>
                     <p className="reveal reveal-delay-2">From ideation to deployment — we cover every layer of your digital needs with one reliable partner.</p>
                 </div>
             </section>
