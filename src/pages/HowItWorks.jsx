@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
 import './HowItWorks.css'
 
@@ -31,19 +32,21 @@ const steps = [
 ]
 
 
-function useReveal() {
-    useEffect(() => {
-        const els = document.querySelectorAll('.reveal')
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
-        }, { threshold: 0.1 })
-        els.forEach(el => obs.observe(el))
-        return () => obs.disconnect()
-    }, [])
+// Framer Motion Variants
+const fadeInUp = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+}
+const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
+}
+const stepVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 }
 
 export default function HowItWorks() {
-    useReveal()
     useEffect(() => { document.title = 'How It Works | Gro Innovative' }, [])
     return (
         <div className="page-enter">
@@ -51,32 +54,42 @@ export default function HowItWorks() {
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
                 <div className="container">
-                    <div className="badge reveal"><span className="badge-dot" />Our Process</div>
-                    <h1 className="reveal reveal-delay-1">How We Deliver<br /><span className="gradient-text">World-Class Software</span></h1>
-                    <p className="reveal reveal-delay-2">A transparent, collaborative process designed to turn your vision into a fully-working product — on time and on budget.</p>
+                    <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="badge"><span className="badge-dot" />Our Process</motion.div>
+                    <motion.h1 variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>How We Deliver<br /><span className="gradient-text">World-Class Software</span></motion.h1>
+                    <motion.p variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>A transparent, collaborative process designed to turn your vision into a fully-working product — on time and on budget.</motion.p>
                 </div>
             </section>
 
             <section className="section">
                 <div className="container">
-                    <div className="steps-grid">
-                        {steps.map((s, i) => (
-                            <div key={s.n} className={`step-card reveal reveal-delay-${(i % 3) + 1}`}>
+                    <motion.div
+                        className="steps-grid"
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.1 }}
+                    >
+                        {steps.map((s) => (
+                            <motion.div
+                                key={s.n}
+                                variants={stepVariants}
+                                className="step-card"
+                            >
                                 <div className="step-num">{s.n}</div>
                                 <div className="step-icon">{s.icon}</div>
                                 <h3>{s.title}</h3>
                                 <p>{s.desc}</p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             <section className="section-sm section-alt">
                 <div className="container container-sm">
                     <div className="section-header">
-                        <h2 className="reveal">Ready to start?</h2>
-                        <p className="reveal reveal-delay-1">Let's build something brilliant together.</p>
+                        <motion.h2 variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>Ready to start?</motion.h2>
+                        <motion.p variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.1 }}>Let's build something brilliant together.</motion.p>
                     </div>
                     <div style={{ textAlign: 'center', marginTop: 16 }}>
                         <Link to="/contact" className="btn btn-primary">Talk to Our Team <span className="arr">→</span></Link>
