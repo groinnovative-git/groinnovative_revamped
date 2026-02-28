@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import ParticleCanvas from '../components/ParticleCanvas'
 import './Contact.css'
 
 const services = ['Web Development', 'Mobile App', 'Cloud & DevOps', 'Digital Marketing', 'Logo & Branding', 'IT Consulting', 'Other']
@@ -29,6 +30,7 @@ export default function Contact() {
     return (
         <div className="page-enter">
             <section className="page-hero">
+                <ParticleCanvas />
                 <div className="page-hero-bg" />
                 <div className="container">
                     <div className="badge reveal"><span className="badge-dot" />Get In Touch</div>

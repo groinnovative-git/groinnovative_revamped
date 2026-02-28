@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
+import { Zap, Lock, Search, Wrench } from 'lucide-react'
 import './Services.css'
 
 const services = [
@@ -55,27 +56,6 @@ const packages = [
     { name: 'Scale', focus: 'Software + Growth', outcomes: ['Custom web/mobile application', 'Advanced growth automation', 'Full-scale marketing funnel'], cta: 'Get a Quote' },
 ]
 
-const trustPoints = [
-    {
-        label: 'Fast delivery',
-        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
-    },
-    {
-        label: 'NDA protected',
-        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-    },
-    {
-        label: 'SEO-ready build',
-        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-    },
-    {
-        label: 'Post-launch support',
-        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
-    }
-]
-
-const techs = ['React', 'Next.js', 'Node.js', 'Python', 'Flutter', 'AWS', 'Docker', 'PostgreSQL', 'MongoDB', 'Figma', 'TypeScript', 'GraphQL']
-
 // Framer Motion Variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 16 },
@@ -95,33 +75,110 @@ export default function Services() {
 
     return (
         <div className="page-enter">
-            {/* Page Header */}
-            <section className="page-hero">
+            {/* ── Services Hero ── */}
+            <section className="relative w-full page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
-                <div className="container">
-                    <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="badge badge-accent"><span className="badge-dot" style={{ background: 'var(--accent)' }} />WHAT WE OFFER</motion.div>
-                    <motion.h1 variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>High-Performance Websites,<br /><span className="gradient-text">Software & Growth Systems</span></motion.h1>
-                    <motion.p variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>From strategy to launch — we build conversion-focused websites, scalable applications, SEO foundations, and marketing systems designed to generate leads and long-term growth.</motion.p>
-                    <motion.div variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="hero-proof-line">
-                        <span>Fast delivery</span> <span className="dot">•</span> <span>NDA protected</span> <span className="dot">•</span> <span>Support after launch</span>
-                    </motion.div>
-                </div>
-            </section>
 
-            {/* Proof Strip */}
-            <section className="proof-strip">
-                <div className="container">
-                    <div className="proof-grid">
-                        {trustPoints.map((tp, i) => (
-                            <div key={tp.label} className="proof-item">
-                                <span className="proof-icon">{tp.icon}</span>
-                                <span className="proof-label">{tp.label}</span>
-                            </div>
-                        ))}
+                {/* Radial vignette / spotlight overlay */}
+                <div
+                    className="pointer-events-none absolute inset-0 z-[1]"
+                    style={{
+                        background:
+                            'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)',
+                    }}
+                />
+
+                <div className="container relative z-[2]" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '100px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout">
+                        <div className="hero-content centered" style={{ maxWidth: 880 }}>
+
+                            {/* Pill badge */}
+                            <motion.div
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                className="badge badge-accent"
+                                style={{
+                                    padding: '5px 14px',
+                                    letterSpacing: '0.08em',
+                                    boxShadow: '0 0 20px rgba(16,185,129,0.15)',
+                                    marginBottom: 28,
+                                }}
+                            >
+                                <span className="badge-dot" style={{ background: 'var(--accent)' }} />
+                                WHAT WE OFFER
+                            </motion.div>
+
+                            {/* Headline */}
+                            <motion.h1
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.1 }}
+                                className="hero-headline"
+                                style={{
+                                    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+                                    fontWeight: 700,
+                                    lineHeight: 1.08,
+                                    letterSpacing: '-0.025em',
+                                    marginBottom: 24,
+                                }}
+                            >
+                                High-Performance Websites,{' '}
+                                <span className="gradient-text">Software&nbsp;&amp;&nbsp;Growth&nbsp;Systems</span>
+                            </motion.h1>
+
+                            {/* Paragraph */}
+                            <motion.p
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.2 }}
+                                style={{
+                                    maxWidth: 620,
+                                    margin: '0 auto',
+                                    fontSize: '1.1rem',
+                                    lineHeight: 1.75,
+                                    color: 'rgba(255,255,255,0.6)',
+                                }}
+                            >
+                                From strategy to launch — we build conversion-focused websites, scalable applications, SEO foundations, and marketing systems designed to generate leads and long-term growth.
+                            </motion.p>
+
+                            {/* Trust pills */}
+                            <motion.div
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.35 }}
+                                className="flex flex-wrap justify-center gap-3"
+                                style={{ marginTop: 40 }}
+                            >
+                                {[
+                                    { label: 'Fast Delivery', icon: Zap },
+                                    { label: 'NDA Protected', icon: Lock },
+                                    { label: 'SEO-Ready Build', icon: Search },
+                                    { label: 'Post-Launch Support', icon: Wrench },
+                                ].map(item => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <span
+                                            key={item.label}
+                                            className="services-trust-pill"
+                                        >
+                                            <Icon className="services-trust-pill-icon" />
+                                            {item.label}
+                                        </span>
+                                    )
+                                })}
+                            </motion.div>
+
+                        </div>
                     </div>
                 </div>
             </section>
+
 
             {/* Services list */}
             <section className="section">
@@ -199,28 +256,6 @@ export default function Services() {
                             </motion.div>
                         ))}
                     </div>
-                </div>
-            </section>
-
-
-            <section className="section-sm section-alt">
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <h3 className="reveal" style={{ marginBottom: 8 }}>Technologies We Use</h3>
-                    <p className="reveal reveal-delay-1" style={{ marginBottom: 32 }}>We work with the best modern tools to deliver robust, scalable solutions.</p>
-                    <div className="tech-cloud reveal reveal-delay-2">
-                        {techs.map(t => <span key={t} className="tech-tag">{t}</span>)}
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA */}
-            <section className="section section-dark">
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <h2 className="reveal" style={{ color: '#fff' }}>Not sure which service you need?</h2>
-                    <p className="reveal reveal-delay-1">Book a free 30-minute consultation. We'll help you figure out the right approach.</p>
-                    <Link to="/contact" className="btn btn-white btn-lg reveal reveal-delay-2" style={{ marginTop: 32 }}>
-                        Book Free Consultation <span className="arr">→</span>
-                    </Link>
                 </div>
             </section>
         </div>

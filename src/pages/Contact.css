@@ -1,3 +1,17 @@
+.page-hero {
+    padding: calc(var(--nav-h) + 64px) 0 48px;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-light) 0%, transparent 60%);
+    border-bottom: 1px solid var(--border);
+}
+
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.6fr;

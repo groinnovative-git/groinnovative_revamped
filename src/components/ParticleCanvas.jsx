@@ -11,8 +11,8 @@ export default function ParticleCanvas() {
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
 
-        const STAR_COUNT = 1100;
-        const FOCAL_LENGTH = 1300; // Perspective depth
+        const STAR_COUNT = 3000;
+        const FOCAL_LENGTH = 3000; // Perspective depth
 
         let stars = [];
         let mouse = { x: 0, y: 0 };
@@ -48,7 +48,7 @@ export default function ParticleCanvas() {
                 // Twinkle properties
                 this.opacity = Math.random();
                 this.twinkleSpeed = 0.01 + Math.random() * 0.03;
-                this.baseOpacity = 0.4 + Math.random() * 0.6;
+                this.baseOpacity = 2 + Math.random() * 0.6;
                 this.color = Math.random() > 0.8 ? '#10b981ff' : '#FFFFFF'; // Emerald or White
             }
 
