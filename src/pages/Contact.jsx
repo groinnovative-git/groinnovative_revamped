@@ -29,13 +29,27 @@ export default function Contact() {
 
     return (
         <div className="page-enter">
-            <section className="page-hero">
+            <section className="page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
-                <div className="container">
-                    <div className="badge reveal"><span className="badge-dot" />Get In Touch</div>
-                    <h1 className="reveal reveal-delay-1">Let's Build Something<br /><span className="gradient-text">Great Together</span></h1>
-                    <p className="reveal reveal-delay-2">Tell us about your project. We'll get back to you with a plan — not a sales pitch — within 24 hours.</p>
+                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '160px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout">
+                        <div className="hero-content centered" style={{ maxWidth: 840 }}>
+                            <div
+                                className="badge reveal"
+                                style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}
+                            >
+                                <span className="badge-dot" />GET IN TOUCH
+                            </div>
+                            <h1 className="hero-headline reveal reveal-delay-1">
+                                Let's Build Something{' '}
+                                <span className="gradient-text">Great Together</span>
+                            </h1>
+                            <p className="hero-sub reveal reveal-delay-2" style={{ maxWidth: 580 }}>
+                                Tell us about your project. We'll get back to you with a plan — not a sales pitch — within 24 hours.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 

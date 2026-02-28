@@ -50,13 +50,43 @@ export default function HowItWorks() {
     useEffect(() => { document.title = 'How It Works | Gro Innovative' }, [])
     return (
         <div className="page-enter">
-            <section className="page-hero">
+            <section className="page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
-                <div className="container">
-                    <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="badge"><span className="badge-dot" />Our Process</motion.div>
-                    <motion.h1 variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>How We Deliver<br /><span className="gradient-text">World-Class Software</span></motion.h1>
-                    <motion.p variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>A transparent, collaborative process designed to turn your vision into a fully-working product — on time and on budget.</motion.p>
+                <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 80px)', paddingBottom: '160px' }}>
+                    <div className="hero-grid-wrapper CenteredLayout">
+                        <div className="hero-content centered" style={{ maxWidth: 840 }}>
+                            <motion.div
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                className="badge"
+                                style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}
+                            >
+                                <span className="badge-dot" />OUR PROCESS
+                            </motion.div>
+                            <motion.h1
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.1 }}
+                                className="hero-headline"
+                            >
+                                How We Deliver{' '}
+                                <span className="gradient-text">World-Class Software</span>
+                            </motion.h1>
+                            <motion.p
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.2 }}
+                                className="hero-sub"
+                                style={{ maxWidth: 580 }}
+                            >
+                                A transparent, collaborative process designed to turn your vision into a fully-working product — on time and on budget.
+                            </motion.p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
