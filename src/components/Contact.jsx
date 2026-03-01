@@ -22,7 +22,7 @@ export default function Contact() {
                 <div className="section-header animate-in" ref={headerRef}>
                     <div className="sec-badge">Get In Touch</div>
                     <h2 className="sec-title">Let's remove your friction together</h2>
-                    <p className="sec-sub">Tell us about your workflow challenges. We'll respond with a plan — not a sales pitch.</p>
+                    <p className="sec-sub">Tell us about your workflow challenges. We'll respond with a plan not a sales pitch.</p>
                 </div>
                 <div className="contact-wrap">
                     <div className="contact-info">

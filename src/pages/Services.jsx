@@ -30,30 +30,30 @@ const services = [
     {
         icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>,
         title: 'Digital Marketing',
-        desc: 'Growth campaigns designed to generate demand — strategy, creatives, ads, and funnels.',
+        desc: 'Growth campaigns designed to generate demand strategy, creatives, ads, and funnels.',
         features: ['Lead-gen funnels + landing pages', 'Google/Meta ads + tracking', 'Social content plan', 'Reporting + optimization cycles'],
         buttonText: 'Grow My Leads'
     },
     {
         icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>,
         title: 'Site Maintenance',
-        desc: 'Keep your site secure, fast, and updated — with ongoing support and monthly improvements.',
+        desc: 'Keep your site secure, fast, and updated with ongoing support and monthly improvements.',
         features: ['Security updates + backups', 'Speed optimization + uptime checks', 'Content updates + bug fixes', 'Monthly reporting + recommendations'],
         buttonText: 'Maintain My Site'
     },
     {
         icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg>,
         title: 'Logo & Poster Creation',
-        desc: 'Modern brand visuals designed for trust — logos and posters for digital + print.',
+        desc: 'Modern brand visuals designed for trust logos and posters for digital + print.',
         features: ['Logo concepts + brand direction', 'Social media posters + banners', 'Print-ready exports', 'Simple brand consistency guide'],
         buttonText: 'Create My Brand'
     },
 ]
 
 const packages = [
-    { name: 'Starter', focus: 'Website', outcomes: ['Conversion-ready landing page', 'Basic SEO setup', 'Mobile responsive design'], cta: 'Get a Quote' },
+    { name: 'Starter', focus: 'Website', outcomes: ['Conversion ready landing page', 'Basic SEO setup', 'Mobile responsive design'], cta: 'Get a Quote' },
     { name: 'Growth', focus: 'Website + SEO', outcomes: ['Performance business site', 'Complete SEO foundation', 'Lead tracking + Analytics'], cta: 'Get a Quote' },
-    { name: 'Scale', focus: 'Software + Growth', outcomes: ['Custom web/mobile application', 'Advanced growth automation', 'Full-scale marketing funnel'], cta: 'Get a Quote' },
+    { name: 'Scale', focus: 'Software + Growth', outcomes: ['Custom web/mobile application', 'Advanced growth automation', 'Full scale marketing funnel'], cta: 'Get a Quote' },
 ]
 
 // Framer Motion Variants
@@ -127,7 +127,7 @@ export default function Services() {
                                     wordBreak: 'break-word',
                                 }}
                             >
-                                High-Performance Websites,{' '}
+                                High Performance Websites,{' '}
                                 <span className="gradient-text">Software & Growth Systems</span>
                             </motion.h1>
 
@@ -145,7 +145,7 @@ export default function Services() {
                                     color: 'rgba(255,255,255,0.6)',
                                 }}
                             >
-                                From strategy to launch — we build conversion-focused websites, scalable applications, SEO foundations, and marketing systems designed to generate leads and long-term growth.
+                                From strategy to launch  we build conversion focused websites, scalable applications, SEO foundations, and marketing systems designed to generate leads and long-term growth.
                             </motion.p>
 
                             {/* Trust pills */}

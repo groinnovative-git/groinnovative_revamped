@@ -12,7 +12,7 @@ const steps = [
     },
     {
         n: '02', icon: PenTool, title: 'Design & Prototyping',
-        desc: 'Our designers create wireframes and high-fidelity mockups. You see exactly what you\'re getting before a single line of code is written.'
+        desc: 'Our designers create wireframes and highfidelity mockups. You see exactly what you\'re getting before a single line of code is written.'
     },
     {
         n: '03', icon: Code, title: 'Agile Development',
@@ -20,11 +20,11 @@ const steps = [
     },
     {
         n: '04', icon: Bug, title: 'Testing & QA',
-        desc: 'Rigorous automated and manual testing across devices and browsers. Performance benchmarks, security reviews, and bug-free deployment.'
+        desc: 'Rigorous automated and manual testing across devices and browsers. Performance benchmarks, security reviews, and bug free deployment.'
     },
     {
         n: '05', icon: Rocket, title: 'Launch & Deploy',
-        desc: 'We handle the full deployment to your cloud infrastructure, set up monitoring, and ensure a smooth go-live with zero downtime.'
+        desc: 'We handle the full deployment to your cloud infrastructure, set up monitoring, and ensure a smooth go live with zero downtime.'
     },
     {
         n: '06', icon: LifeBuoy, title: 'Support & Growth',
@@ -74,7 +74,7 @@ export default function HowItWorks() {
                                 className="hero-headline"
                             >
                                 How We Deliver{' '}
-                                <span className="gradient-text">World-Class Software</span>
+                                <span className="gradient-text">World Class Software</span>
                             </motion.h1>
                             <motion.p
                                 variants={fadeInUp}
@@ -84,7 +84,7 @@ export default function HowItWorks() {
                                 className="hero-sub"
                                 style={{ maxWidth: 580 }}
                             >
-                                A transparent, collaborative process designed to turn your vision into a fully-working product — on time and on budget.
+                                A transparent, collaborative process designed to turn your vision into a fully working product on time and on budget.
                             </motion.p>
                         </div>
                     </div>

@@ -10,9 +10,9 @@ const W3F_URL = 'https://api.web3forms.com/submit'
 
 // ── EmailJS (user auto-reply only) ────────────────────────────────────────────
 // Uses ONLY the PUBLIC KEY — never the private key. Safe for frontend use.
-const EJS_SERVICE  = import.meta.env.VITE_EMAILJS_SERVICE_ID       // service_f3pbks9
+const EJS_SERVICE = import.meta.env.VITE_EMAILJS_SERVICE_ID       // service_f3pbks9
 const EJS_TEMPLATE = import.meta.env.VITE_EMAILJS_TEMPLATE_AUTOREPLY // template_xwvza7j
-const EJS_PUBKEY   = import.meta.env.VITE_EMAILJS_PUBLIC_KEY        // LV04WC6YVJ8xspdxO
+const EJS_PUBKEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY        // LV04WC6YVJ8xspdxO
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -35,17 +35,17 @@ const stripPhone = raw => raw.replace(/[^\d]/g, '')
 // ── Validation ─────────────────────────────────────────────────────────────────
 function validate(f) {
     const e = {}
-    if (!f.name.trim())                               e.name    = 'Name is required.'
-    if (!f.email.trim())                              e.email   = 'Email is required.'
-    else if (!EMAIL_RE.test(f.email))                 e.email   = 'Enter a valid email address.'
-    if (!f.phone.trim())                              e.phone   = 'Phone number is required.'
+    if (!f.name.trim()) e.name = 'Name is required.'
+    if (!f.email.trim()) e.email = 'Email is required.'
+    else if (!EMAIL_RE.test(f.email)) e.email = 'Enter a valid email address.'
+    if (!f.phone.trim()) e.phone = 'Phone number is required.'
     else {
         const digits = stripPhone(f.phone)
-        if (digits.length < 7 || digits.length > 15) e.phone   = 'Enter a valid phone number (7–15 digits).'
+        if (digits.length < 7 || digits.length > 15) e.phone = 'Enter a valid phone number (7–15 digits).'
     }
-    if (!f.service)                                   e.service = 'Please select a service.'
-    if (!f.message.trim())                            e.message = 'Message is required.'
-    else if (f.message.trim().length < 10)            e.message = 'Message must be at least 10 characters.'
+    if (!f.service) e.service = 'Please select a service.'
+    if (!f.message.trim()) e.message = 'Message is required.'
+    else if (f.message.trim().length < 10) e.message = 'Message must be at least 10 characters.'
     return e
 }
 
@@ -73,11 +73,11 @@ export default function Contact() {
     useReveal()
     useEffect(() => { document.title = 'Contact Us | Gro Innovative' }, [])
 
-    const [form,      setForm]      = useState(BLANK)
-    const [errors,    setErrors]    = useState({})
+    const [form, setForm] = useState(BLANK)
+    const [errors, setErrors] = useState({})
     const [isSending, setIsSending] = useState(false)
     // null | 'success' | 'success_no_reply' | 'error'
-    const [status,    setStatus]    = useState(null)
+    const [status, setStatus] = useState(null)
 
     const handle = e => {
         const { name, value } = e.target
@@ -99,26 +99,26 @@ export default function Contact() {
         setIsSending(true)
         setStatus(null)
 
-        const cleanPhone      = stripPhone(form.phone)
+        const cleanPhone = stripPhone(form.phone)
         const resolvedSubject = form.subject.trim() || `New Inquiry: ${form.service} — Gro Innovative`
 
         try {
             // ── Step 1: Web3Forms → admin notification ─────────────────────
             // NOTE: No autoresponder fields here — user reply handled by EmailJS.
             const res = await fetch(W3F_URL, {
-                method:  'POST',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
                     access_key: W3F_KEY,
-                    from_name:  'Gro Innovative Website',
-                    replyto:    form.email,
-                    botcheck:   form.botcheck,
-                    name:       form.name,
-                    email:      form.email,
-                    phone:      cleanPhone,
-                    service:    form.service,
-                    subject:    resolvedSubject,
-                    message:    form.message,
+                    from_name: 'Gro Innovative Website',
+                    replyto: form.email,
+                    botcheck: form.botcheck,
+                    name: form.name,
+                    email: form.email,
+                    phone: cleanPhone,
+                    service: form.service,
+                    subject: resolvedSubject,
+                    message: form.message,
                     // ── NO autoresponder_subject / autoresponder_message ──
                 }),
             })
@@ -135,15 +135,15 @@ export default function Contact() {
                     EJS_TEMPLATE,
                     {
                         // Maps to {{to_email}} in template — EmailJS sends TO this address
-                        to_email:  form.email,
+                        to_email: form.email,
                         // Template variables (match exactly what's in autoreply.html)
-                        name:      form.name,
-                        service:   form.service,
-                        subject:   resolvedSubject,
-                        message:   form.message,
-                        phone:     cleanPhone,
-                        page_url:  window.location.href,
-                        year:      String(new Date().getFullYear()),
+                        name: form.name,
+                        service: form.service,
+                        subject: resolvedSubject,
+                        message: form.message,
+                        phone: cleanPhone,
+                        page_url: window.location.href,
+                        year: String(new Date().getFullYear()),
                         from_name: 'Gro Innovative',
                     },
                     { publicKey: EJS_PUBKEY },
@@ -187,7 +187,7 @@ export default function Contact() {
                                 <span className="gradient-text">Great Together</span>
                             </h1>
                             <p className="hero-sub reveal reveal-delay-2" style={{ maxWidth: 580 }}>
-                                Tell us about your project. We'll get back to you with a plan — not a sales pitch — within 24 hours.
+                                Tell us about your project. We'll get back to you with a plan not a sales pitch within 24 hours.
                             </p>
                         </div>
                     </div>
@@ -202,24 +202,24 @@ export default function Contact() {
                         {/* ── Info column ─────────────────────────────────── */}
                         <div className="contact-info reveal">
                             <h3>Contact Information</h3>
-                            <p>Reach out directly or fill the form — our team typically responds within 4 business hours.</p>
+                            <p>Reach out directly or fill the form our team typically responds within 4 business hours.</p>
 
                             <div className="info-items">
                                 {[
                                     {
-                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>,
                                         label: 'Email', val: 'groinnovative@gmail.com',
                                     },
                                     {
-                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
-                                        label: 'Phone', val: '+91 98765 43210',
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>,
+                                        label: 'Phone', val: '+91 9345306018', val2: '+91 9003343806',
                                     },
                                     {
-                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>,
-                                        label: 'Address', val: 'Bangalore, Karnataka, India',
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>,
+                                        label: 'Address', val: 'Coimbatore, Tamil Nadu, India',
                                     },
                                     {
-                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>,
                                         label: 'Hours', val: 'Mon – Sat, 9am – 7pm IST',
                                     },
                                 ].map(item => (
@@ -235,15 +235,15 @@ export default function Contact() {
 
                             <div className="contact-badges">
                                 <div className="cbadge">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                                     NDA Protected
                                 </div>
                                 <div className="cbadge">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
                                     Free Consultation
                                 </div>
                                 <div className="cbadge">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
                                     Remote Friendly
                                 </div>
                             </div>
@@ -256,8 +256,8 @@ export default function Contact() {
                             {status === 'success' && (
                                 <div className="submit-status submit-status--success" role="alert">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                        <polyline points="22 4 12 14.01 9 11.01" />
                                     </svg>
                                     <p>Thanks! We'll get back to you within 24 hours. Check your inbox for a confirmation email.</p>
                                 </div>
@@ -267,8 +267,8 @@ export default function Contact() {
                             {status === 'success_no_reply' && (
                                 <div className="submit-status submit-status--success" role="alert">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                        <polyline points="22 4 12 14.01 9 11.01" />
                                     </svg>
                                     <p>Submitted successfully. If you don't receive a confirmation email, please contact us directly at <strong>groinnovative@gmail.com</strong>.</p>
                                 </div>
@@ -278,9 +278,9 @@ export default function Contact() {
                             {status === 'error' && (
                                 <div className="submit-status submit-status--error" role="alert">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="12" y1="8" x2="12" y2="12"/>
-                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="12" />
+                                        <line x1="12" y1="16" x2="12.01" y2="16" />
                                     </svg>
                                     <p>Something went wrong. Please try again or email us at <strong>groinnovative@gmail.com</strong>.</p>
                                 </div>
@@ -290,8 +290,8 @@ export default function Contact() {
 
                                 {/* Web3Forms hidden fields */}
                                 <input type="hidden" name="access_key" value={W3F_KEY} />
-                                <input type="hidden" name="from_name"  value="Gro Innovative Website" />
-                                <input type="hidden" name="replyto"    value={form.email} />
+                                <input type="hidden" name="from_name" value="Gro Innovative Website" />
+                                <input type="hidden" name="replyto" value={form.email} />
 
                                 {/* Honeypot — must stay empty */}
                                 <input
@@ -368,7 +368,7 @@ export default function Contact() {
                                             </select>
                                             <span className="select-arrow" aria-hidden="true">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                                    <polyline points="6 9 12 15 18 9"/>
+                                                    <polyline points="6 9 12 15 18 9" />
                                                 </svg>
                                             </span>
                                         </div>

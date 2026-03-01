@@ -51,17 +51,17 @@ export default function Hero() {
             <div className="hero-content">
                 <div className="badge hero-badge" ref={badgeRef}>
                     <span className="badge-dot" />
-                    ACCELERATE YOUR AI WORKFLOWS
+                    ACCELERATE YOUR Businesses
                 </div>
 
                 <h1 className="hero-title">
-                    <span className="hero-line" ref={title1Ref}>AI-Driven Software &</span>
+                    <span className="hero-line" ref={title1Ref}>AI Driven Software &</span>
                     <span className="hero-line hero-line-accent" ref={title2Ref}>Growth Systems</span>
                     <span className="hero-line hero-line-dim" ref={title3Ref}>for Modern Businesses</span>
                 </h1>
 
                 <p className="hero-sub" ref={subRef}>
-                    We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products — engineered for performance, visibility, and long-term growth.
+                    We design and build scalable SaaS platforms, intelligent websites, and automation ready digital products engineered for performance, visibility, and long-term growth.
                 </p>
 
                 <div className="hero-btns" ref={btnsRef}>

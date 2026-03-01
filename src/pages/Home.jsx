@@ -41,25 +41,25 @@ function CountUp({ target, suffix = '' }) {
 }
 
 const services = [
-    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></svg>, title: 'Website Creation', desc: 'High-converting landing pages and business websites built for speed, SEO, and modern UI — optimized for leads and trust.', color: 'rgba(16, 185, 129, 0.1)' },
+    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></svg>, title: 'Website Creation', desc: 'High converting landing pages and business websites built for speed, SEO, and modern UI optimized for leads and trust.', color: 'rgba(16, 185, 129, 0.1)' },
     { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>, title: 'SEO Optimization', desc: 'Technical SEO, on-page optimization, keyword strategy, and performance fixes to improve rankings, visibility, and organic growth.', color: 'rgba(16, 185, 129, 0.1)' },
-    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>, title: 'Software Development', desc: 'Custom web and mobile applications using modern stacks — scalable architecture, clean code, and production-ready delivery.', color: 'rgba(16, 185, 129, 0.1)' },
-    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>, title: 'Digital Marketing', desc: 'Growth campaigns across search and social — content, ads, funnels, and analytics built to generate consistent demand.', color: 'rgba(16, 185, 129, 0.1)' },
+    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>, title: 'Software Development', desc: 'Custom web and mobile applications using modern stacks scalable architecture, clean code, and production ready delivery.', color: 'rgba(16, 185, 129, 0.1)' },
+    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>, title: 'Digital Marketing', desc: 'Growth campaigns across search and social content, ads, funnels, and analytics built to generate consistent demand.', color: 'rgba(16, 185, 129, 0.1)' },
     { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>, title: 'Site Maintenance', desc: 'Ongoing updates, security checks, performance tuning, backups, and support to keep your website reliable and fast.', color: 'rgba(16, 185, 129, 0.1)' },
     { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg>, title: 'Logo & Poster Creation', desc: 'Clean, modern brand visuals — logos, posters, and marketing creatives designed for digital and print use.', color: 'rgba(16, 185, 129, 0.1)' },
 ]
 
 const stats = [
-    { value: 50, suffix: '+', label: 'Clients Served' },
-    { value: 120, suffix: '+', label: 'Projects Delivered' },
-    { value: 5, suffix: '+', label: 'Years Experience' },
+    { value: 10, suffix: '+', label: 'Clients Served' },
+    { value: 15, suffix: '+', label: 'Projects Delivered' },
+    { value: 2, suffix: '+', label: 'Years Experience' },
     { value: 98, suffix: '%', label: 'Client Satisfaction' },
 ]
 
 const whyUs = [
-    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>, title: 'Fast Execution', desc: 'Agile delivery with clear milestones. Most projects move from concept to launch in weeks — not months — with full transparency.' },
+    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>, title: 'Fast Execution', desc: 'Agile delivery with clear milestones. Most projects move from concept to launch in weeks not months  with full transparency.' },
     { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" /></svg>, title: 'Enterprise Quality', desc: 'Built with modern architectures, clean code, and rigorous testing standards to ensure long-term performance and reliability.' },
-    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z" /><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" /></svg>, title: 'Long-Term Partnership', desc: 'From development to maintenance and optimization, we support your growth beyond launch — ensuring continuous improvement.' },
+    { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z" /><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" /></svg>, title: 'Long-Term Partnership', desc: 'From development to maintenance and optimization, we support your growth beyond launch ensuring continuous improvement.' },
 ]
 
 // Framer Motion Variants for Why Section
@@ -133,10 +133,10 @@ export default function Home() {
                         <div className="hero-content centered">
                             <div className="badge reveal">
                                 <span className="badge-dot" />
-                                ACCELERATE YOUR AI WORKFLOWS
+                                ACCELERATE YOUR BUSINESSES
                             </div>
                             <h1 className="hero-headline reveal reveal-delay-1">
-                                AI-Driven Software &<br />
+                                AI Driven Software &<br />
                                 <span className="hero-nowrap-line">
                                     <EyeFollowIcon />
                                     <span className="gradient-text">Growth Systems</span>
@@ -144,7 +144,7 @@ export default function Home() {
                                 for Modern Businesses
                             </h1>
                             <p className="hero-sub reveal reveal-delay-2">
-                                We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products — engineered for performance, visibility, and long-term growth.
+                                We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products engineered for performance, visibility, and long-term growth.
                             </p>
                             <div className="hero-actions reveal reveal-delay-3">
                                 <Link to="/services" className="btn btn-primary">
@@ -189,7 +189,7 @@ export default function Home() {
                     <div className="section-header">
                         <div className="badge reveal"><span className="badge-dot" />What We Do</div>
                         <h2 className="reveal reveal-delay-1">End-to-End Digital & Software Solutions</h2>
-                        <p className="reveal reveal-delay-2">From idea to launch — we handle every layer of your digital product.</p>
+                        <p className="reveal reveal-delay-2">From idea to launch we handle every layer of your digital product.</p>
                     </div>
                     <motion.div
                         className="grid-3 services-grid"
@@ -231,7 +231,7 @@ export default function Home() {
                             <motion.div variants={fadeInUpBadge} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} className="badge"><span className="badge-dot" />WHY GRO INNOVATIVE</motion.div>
                             <motion.h2 variants={fadeInUpHeading} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }}>Your Technology Partner for Scalable Growth</motion.h2>
                             <motion.p variants={fadeInUpP} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} style={{ marginBottom: 32 }}>
-                                We build scalable digital systems that turn ideas into real business growth — combining AI-powered software development, performance-focused web solutions, and strategic digital execution.
+                                We build scalable digital systems that turn ideas into real business growth combining AI powered software development, performance focused web solutions, and strategic digital execution.
                             </motion.p>
                             <motion.div variants={staggerContainerLeft} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }}>
                                 {whyUs.map((w) => (

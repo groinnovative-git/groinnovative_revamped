@@ -24,7 +24,7 @@ export default function Footer() {
                         </div>
                         <p className="footer-tagline">
                             We build software that scales.<br />
-                            Trusted by 50+ businesses worldwide.
+                            Trusted by 50+ clients.
                         </p>
                         <div className="footer-socials">
                             {social.map(s => (
@@ -52,9 +52,9 @@ export default function Footer() {
                     <div className="footer-col">
                         <h4>Get in Touch</h4>
                         <ul className="footer-contact-list">
-                            <li>📧 hello@groinnovative.com</li>
-                            <li>📞 +91 98765 43210</li>
-                            <li>📍 Bangalore, India</li>
+                            <li>groinnovative@gmail.com</li>
+                            <li> +91 9345306018 , +91 9003343806</li>
+                            <li> Coimbatore, Tamil Nadu, India</li>
                         </ul>
                         <Link to="/contact" className="btn btn-primary btn-sm" style={{ marginTop: 16, display: 'inline-flex' }}>
                             Start a Project
