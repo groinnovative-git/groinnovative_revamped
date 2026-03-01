@@ -2,43 +2,163 @@ import { useEffect, useState } from 'react'
 import ParticleCanvas from '../components/ParticleCanvas'
 import './Contact.css'
 
-const services = ['Web Development', 'Mobile App', 'Cloud & DevOps', 'Digital Marketing', 'Logo & Branding', 'IT Consulting', 'Other']
+// ── Web3Forms ──────────────────────────────────────────────────────────────────
+const W3F_KEY  = 'd7872b01-645d-48f5-a766-ae856a69913d'
+const W3F_URL  = 'https://api.web3forms.com/submit'
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// ── Services dropdown options ──────────────────────────────────────────────────
+const SERVICES = [
+    'Landing Website',
+    'SaaS / Web Application',
+    'Mobile App Development',
+    'AI Integration & Automation',
+    'SEO Optimization',
+    'Site Maintenance',
+    'Digital Marketing',
+    'Logo & Poster Design',
+    'Other',
+]
+
+// ── Phone helpers ──────────────────────────────────────────────────────────────
+// Strip everything except digits so we can count them accurately
+const stripPhone = raw => raw.replace(/[^\d]/g, '')
+
+// ── Validation ─────────────────────────────────────────────────────────────────
+function validate(f) {
+    const e = {}
+    if (!f.name.trim())                              e.name    = 'Name is required.'
+    if (!f.email.trim())                             e.email   = 'Email is required.'
+    else if (!EMAIL_RE.test(f.email))                e.email   = 'Enter a valid email address.'
+    if (!f.phone.trim())                             e.phone   = 'Phone number is required.'
+    else {
+        const digits = stripPhone(f.phone)
+        if (digits.length < 7 || digits.length > 15) e.phone  = 'Enter a valid phone number (7–15 digits).'
+    }
+    if (!f.service)                                  e.service = 'Please select a service.'
+    if (!f.message.trim())                           e.message = 'Message is required.'
+    else if (f.message.trim().length < 10)           e.message = 'Message must be at least 10 characters.'
+    return e
+}
+
+// ── Scroll reveal ──────────────────────────────────────────────────────────────
 function useReveal() {
     useEffect(() => {
         const els = document.querySelectorAll('.reveal')
         const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) }
+            })
         }, { threshold: 0.1 })
         els.forEach(el => obs.observe(el))
         return () => obs.disconnect()
     }, [])
 }
 
+const BLANK = {
+    name: '', email: '', phone: '', service: '',
+    subject: '', message: '', botcheck: '',
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 export default function Contact() {
     useReveal()
     useEffect(() => { document.title = 'Contact Us | Gro Innovative' }, [])
-    const [sent, setSent] = useState(false)
-    const [form, setForm] = useState({ name: '', email: '', company: '', service: '', message: '' })
 
-    const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
-    const submit = e => {
-        e.preventDefault()
-        setSent(true)
+    const [form,      setForm]      = useState(BLANK)
+    const [errors,    setErrors]    = useState({})
+    const [isSending, setIsSending] = useState(false)
+    const [status,    setStatus]    = useState(null)   // null | 'success' | 'error'
+
+    const handle = e => {
+        const { name, value } = e.target
+        setForm(f => ({ ...f, [name]: value }))
+        if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
     }
 
+    // ── Submit ─────────────────────────────────────────────────────────────────
+    const submit = async e => {
+        e.preventDefault()
+
+        // Anti-spam honeypot
+        if (form.botcheck) return
+
+        // Validate
+        const errs = validate(form)
+        if (Object.keys(errs).length) { setErrors(errs); return }
+
+        setIsSending(true)
+        setStatus(null)
+
+        // Sanitise phone — strip to digits only for submission
+        const cleanPhone = stripPhone(form.phone)
+
+        // Auto-reply body (sent to user via Web3Forms autoresponder)
+        const autoReplyBody =
+            `Hi ${form.name},\n\n` +
+            `Thanks for reaching out to Gro Innovative. We received your message about ${form.service}.\n\n` +
+            `Our team will review your enquiry and reply within 24 hours.\n\n` +
+            `— Gro Innovative\n` +
+            `https://groinnovativerevamped.vercel.app/`
+
+        try {
+            const res = await fetch(W3F_URL, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    // ── Core Web3Forms fields ──────────────────────────────
+                    access_key:   W3F_KEY,
+                    from_name:    'Gro Innovative Website',
+                    replyto:      form.email,
+                    botcheck:     form.botcheck,
+
+                    // ── Submission data (appears in admin notification) ───
+                    name:         form.name,
+                    email:        form.email,
+                    phone:        cleanPhone,
+                    service:      form.service,
+                    subject:      form.subject.trim() || `New Inquiry: ${form.service} — Gro Innovative`,
+                    message:      form.message,
+
+                    // ── Web3Forms autoresponder ────────────────────────────
+                    // NOTE: Enable "Auto Reply" in your Web3Forms dashboard
+                    // Dashboard → your form → Settings → Auto Response Email
+                    // These fields populate the auto-reply sent to the user.
+                    autoresponder_subject: 'We received your message — Gro Innovative',
+                    autoresponder_message: autoReplyBody,
+                }),
+            })
+
+            const data = await res.json()
+
+            if (data.success) {
+                setForm(BLANK)
+                setErrors({})
+                setStatus('success')
+                setTimeout(() => setStatus(null), 7000)
+            } else {
+                throw new Error(data.message || 'Submission failed')
+            }
+        } catch (err) {
+            console.error('[Web3Forms]', err)
+            setStatus('error')
+        } finally {
+            setIsSending(false)
+        }
+    }
+
+    // ── Render ─────────────────────────────────────────────────────────────────
     return (
         <div className="page-enter">
+
+            {/* ── Hero ──────────────────────────────────────────────────────── */}
             <section className="page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />
                 <div className="page-hero-bg" />
                 <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
                     <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 840 }}>
-                            <div
-                                className="badge reveal"
-                                style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}
-                            >
+                            <div className="badge reveal" style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}>
                                 <span className="badge-dot" />GET IN TOUCH
                             </div>
                             <h1 className="hero-headline reveal reveal-delay-1">
@@ -53,19 +173,34 @@ export default function Contact() {
                 </div>
             </section>
 
+            {/* ── Content ───────────────────────────────────────────────────── */}
             <section className="section">
                 <div className="container">
                     <div className="contact-grid">
-                        {/* Info column */}
+
+                        {/* ── Info column ─────────────────────────────────── */}
                         <div className="contact-info reveal">
                             <h3>Contact Information</h3>
                             <p>Reach out directly or fill the form — our team typically responds within 4 business hours.</p>
+
                             <div className="info-items">
                                 {[
-                                    { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>, label: 'Email', val: 'hello@groinnovative.com' },
-                                    { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>, label: 'Phone', val: '+91 98765 43210' },
-                                    { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>, label: 'Address', val: 'Bangalore, Karnataka, India' },
-                                    { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>, label: 'Hours', val: 'Mon – Sat, 9am – 7pm IST' },
+                                    {
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+                                        label: 'Email', val: 'groinnovative@gmail.com',
+                                    },
+                                    {
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+                                        label: 'Phone', val: '+91 98765 43210',
+                                    },
+                                    {
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>,
+                                        label: 'Address', val: 'Bangalore, Karnataka, India',
+                                    },
+                                    {
+                                        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+                                        label: 'Hours', val: 'Mon – Sat, 9am – 7pm IST',
+                                    },
                                 ].map(item => (
                                     <div key={item.label} className="info-item">
                                         <div className="info-icon">{item.icon}</div>
@@ -76,57 +211,184 @@ export default function Contact() {
                                     </div>
                                 ))}
                             </div>
+
                             <div className="contact-badges">
-                                <div className="cbadge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>NDA Protected</div>
-                                <div className="cbadge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>Free Consultation</div>
-                                <div className="cbadge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>Remote Friendly</div>
+                                <div className="cbadge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    NDA Protected
+                                </div>
+                                <div className="cbadge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    Free Consultation
+                                </div>
+                                <div className="cbadge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: 6 }}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    Remote Friendly
+                                </div>
                             </div>
                         </div>
 
-                        {/* Form column */}
+                        {/* ── Form column ──────────────────────────────────── */}
                         <div className="contact-form-wrap reveal reveal-delay-1">
-                            {sent ? (
-                                <div className="success-state">
-                                    <div className="success-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg></div>
-                                    <h3>Message Sent!</h3>
-                                    <p>Thank you for reaching out. We'll get back to you within 24 hours with a tailored plan.</p>
+
+                            {/* Success banner */}
+                            {status === 'success' && (
+                                <div className="submit-status submit-status--success" role="alert">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <p>Thanks! We'll get back to you within 24 hours. Check your inbox for a confirmation email.</p>
                                 </div>
-                            ) : (
-                                <form className="contact-form" onSubmit={submit}>
-                                    <div className="form-row">
-                                        <div className="field">
-                                            <label>Your Name *</label>
-                                            <input name="name" value={form.name} onChange={handle} placeholder="Alex Johnson" required />
-                                        </div>
-                                        <div className="field">
-                                            <label>Work Email *</label>
-                                            <input name="email" type="email" value={form.email} onChange={handle} placeholder="alex@company.com" required />
-                                        </div>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="field">
-                                            <label>Company</label>
-                                            <input name="company" value={form.company} onChange={handle} placeholder="Your Company Inc." />
-                                        </div>
-                                        <div className="field">
-                                            <label>Service Needed</label>
-                                            <select name="service" value={form.service} onChange={handle}>
-                                                <option value="">Select a service…</option>
-                                                {services.map(s => <option key={s} value={s}>{s}</option>)}
-                                            </select>
-                                        </div>
+                            )}
+
+                            {/* Error banner */}
+                            {status === 'error' && (
+                                <div className="submit-status submit-status--error" role="alert">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    <p>Something went wrong. Please try again or email us at <strong>groinnovative@gmail.com</strong>.</p>
+                                </div>
+                            )}
+
+                            <form className="contact-form" onSubmit={submit} noValidate>
+
+                                {/* Web3Forms hidden fields */}
+                                <input type="hidden" name="access_key" value={W3F_KEY} />
+                                <input type="hidden" name="from_name"  value="Gro Innovative Website" />
+                                <input type="hidden" name="replyto"    value={form.email} />
+
+                                {/* Honeypot — must stay empty */}
+                                <input
+                                    type="checkbox"
+                                    name="botcheck"
+                                    checked={!!form.botcheck}
+                                    onChange={handle}
+                                    style={{ display: 'none' }}
+                                    tabIndex={-1}
+                                    aria-hidden="true"
+                                />
+
+                                {/* Row 1 — Name + Email */}
+                                <div className="form-row">
+                                    <div className="field">
+                                        <label htmlFor="cf-name">Full Name *</label>
+                                        <input
+                                            id="cf-name"
+                                            name="name"
+                                            value={form.name}
+                                            onChange={handle}
+                                            placeholder="Alex Johnson"
+                                            autoComplete="name"
+                                            className={errors.name ? 'input-error' : ''}
+                                        />
+                                        {errors.name && <span className="field-error">{errors.name}</span>}
                                     </div>
                                     <div className="field">
-                                        <label>Project Details *</label>
-                                        <textarea name="message" value={form.message} onChange={handle} rows={5} placeholder="Tell us about your project, goals, and timeline…" required />
+                                        <label htmlFor="cf-email">Email *</label>
+                                        <input
+                                            id="cf-email"
+                                            name="email"
+                                            type="email"
+                                            value={form.email}
+                                            onChange={handle}
+                                            placeholder="alex@company.com"
+                                            autoComplete="email"
+                                            className={errors.email ? 'input-error' : ''}
+                                        />
+                                        {errors.email && <span className="field-error">{errors.email}</span>}
                                     </div>
-                                    <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%', justifyContent: 'center' }}>
-                                        Send Message <span className="arr">→</span>
-                                    </button>
-                                    <p className="form-note">By submitting, you agree to our Privacy Policy. We'll respond within 24 hours.</p>
-                                </form>
-                            )}
+                                </div>
+
+                                {/* Row 2 — Phone + Service */}
+                                <div className="form-row">
+                                    <div className="field">
+                                        <label htmlFor="cf-phone">Phone *</label>
+                                        <input
+                                            id="cf-phone"
+                                            name="phone"
+                                            type="tel"
+                                            value={form.phone}
+                                            onChange={handle}
+                                            placeholder="+91 98765 43210"
+                                            autoComplete="tel"
+                                            className={errors.phone ? 'input-error' : ''}
+                                        />
+                                        {errors.phone && <span className="field-error">{errors.phone}</span>}
+                                    </div>
+                                    <div className="field">
+                                        <label htmlFor="cf-service">Service *</label>
+                                        <div className="select-wrap">
+                                            <select
+                                                id="cf-service"
+                                                name="service"
+                                                value={form.service}
+                                                onChange={handle}
+                                                className={errors.service ? 'input-error' : ''}
+                                            >
+                                                <option value="">Select a service…</option>
+                                                {SERVICES.map(s => (
+                                                    <option key={s} value={s}>{s}</option>
+                                                ))}
+                                            </select>
+                                            <span className="select-arrow" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                                    <polyline points="6 9 12 15 18 9"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        {errors.service && <span className="field-error">{errors.service}</span>}
+                                    </div>
+                                </div>
+
+                                {/* Row 3 — Subject (optional) */}
+                                <div className="field">
+                                    <label htmlFor="cf-subject">Subject <span className="field-optional">(optional)</span></label>
+                                    <input
+                                        id="cf-subject"
+                                        name="subject"
+                                        value={form.subject}
+                                        onChange={handle}
+                                        placeholder="Project inquiry, Pricing, Quick question…"
+                                    />
+                                </div>
+
+                                {/* Row 4 — Message */}
+                                <div className="field">
+                                    <label htmlFor="cf-message">Message *</label>
+                                    <textarea
+                                        id="cf-message"
+                                        name="message"
+                                        value={form.message}
+                                        onChange={handle}
+                                        rows={5}
+                                        placeholder="Tell us about your project, goals, and timeline…"
+                                        className={errors.message ? 'input-error' : ''}
+                                    />
+                                    {errors.message && <span className="field-error">{errors.message}</span>}
+                                </div>
+
+                                {/* Submit */}
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-lg cf-submit-btn"
+                                    disabled={isSending}
+                                >
+                                    {isSending
+                                        ? <><span className="btn-spinner" aria-hidden="true" />Sending…</>
+                                        : <>Send Message <span className="arr">→</span></>
+                                    }
+                                </button>
+
+                                <p className="form-note">
+                                    By submitting, you agree to our Privacy Policy. We'll respond within 24 hours.
+                                </p>
+                            </form>
                         </div>
+
                     </div>
                 </div>
             </section>

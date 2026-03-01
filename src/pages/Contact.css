@@ -298,3 +298,115 @@
         font-size: 0.68rem;
     }
 }
+
+/* ── Optional field label ───────────────────────────────────────────────────── */
+.field-optional {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--muted-light);
+    margin-left: 4px;
+}
+
+/* ── Select wrapper (custom arrow) ──────────────────────────────────────────── */
+.select-wrap {
+    position: relative;
+}
+
+.select-wrap select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Field-level validation errors ─────────────────────────────────────────── */
+.field-error {
+    font-size: 0.78rem;
+    color: #f87171;
+    margin-top: 3px;
+    display: block;
+}
+
+.field input.input-error,
+.field textarea.input-error,
+.field select.input-error {
+    border-color: rgba(239, 68, 68, 0.55);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+}
+
+/* ── Submit status banners ──────────────────────────────────────────────────── */
+.submit-status {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm, 8px);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+}
+
+.submit-status p {
+    margin: 0;
+}
+
+.submit-status--success {
+    background: rgba(16, 185, 129, 0.08);
+    color: #6ee7b7;
+    border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.submit-status--success svg {
+    color: #34d399;
+}
+
+.submit-status--error {
+    background: rgba(239, 68, 68, 0.08);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.submit-status--error svg {
+    color: #f87171;
+}
+
+/* ── Button loading spinner ─────────────────────────────────────────────────── */
+.btn-spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Contact submit button — full width */
+.cf-submit-btn {
+    width: 100%;
+    justify-content: center;
+}
