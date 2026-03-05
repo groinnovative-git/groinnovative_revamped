@@ -36,12 +36,13 @@ const stripPhone = raw => raw.replace(/[^\d]/g, '')
 function validate(f) {
     const e = {}
     if (!f.name.trim()) e.name = 'Name is required.'
+    else if (f.name.trim().length < 5) e.name = 'Name must be at least 5 characters.'
     if (!f.email.trim()) e.email = 'Email is required.'
     else if (!EMAIL_RE.test(f.email)) e.email = 'Enter a valid email address.'
     if (!f.phone.trim()) e.phone = 'Phone number is required.'
     else {
         const digits = stripPhone(f.phone)
-        if (digits.length < 7 || digits.length > 15) e.phone = 'Enter a valid phone number (7–15 digits).'
+        if (digits.length !== 10) e.phone = 'Enter a valid 10-digit mobile number.'
     }
     if (!f.service) e.service = 'Please select a service.'
     if (!f.message.trim()) e.message = 'Message is required.'
@@ -81,7 +82,13 @@ export default function Contact() {
 
     const handle = e => {
         const { name, value } = e.target
-        setForm(f => ({ ...f, [name]: value }))
+        if (name === 'phone') {
+            // Only allow digits, max 10
+            const digits = value.replace(/[^\d]/g, '').slice(0, 10)
+            setForm(f => ({ ...f, phone: digits }))
+        } else {
+            setForm(f => ({ ...f, [name]: value }))
+        }
         if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
     }
 
@@ -99,7 +106,7 @@ export default function Contact() {
         setIsSending(true)
         setStatus(null)
 
-        const cleanPhone = stripPhone(form.phone)
+        const cleanPhone = '+91' + stripPhone(form.phone)
         const resolvedSubject = form.subject.trim() || `New Inquiry: ${form.service} — Gro Innovative`
 
         try {
@@ -339,16 +346,21 @@ export default function Contact() {
                                 <div className="form-row">
                                     <div className="field">
                                         <label htmlFor="cf-phone">Phone *</label>
-                                        <input
-                                            id="cf-phone"
-                                            name="phone"
-                                            type="tel"
-                                            value={form.phone}
-                                            onChange={handle}
-                                            placeholder="+91 98765 43210"
-                                            autoComplete="tel"
-                                            className={errors.phone ? 'input-error' : ''}
-                                        />
+                                        <div className="phone-input-wrap">
+                                            <span className="phone-prefix">+91</span>
+                                            <input
+                                                id="cf-phone"
+                                                name="phone"
+                                                type="tel"
+                                                inputMode="numeric"
+                                                maxLength={10}
+                                                value={form.phone}
+                                                onChange={handle}
+                                                placeholder="98765 43210"
+                                                autoComplete="tel"
+                                                className={errors.phone ? 'input-error' : ''}
+                                            />
+                                        </div>
                                         {errors.phone && <span className="field-error">{errors.phone}</span>}
                                     </div>
                                     <div className="field">

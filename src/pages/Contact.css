@@ -194,7 +194,7 @@
     .info-item {
         text-align: left;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .contact-badges {
@@ -245,6 +245,8 @@
     .info-icon {
         width: 36px;
         height: 36px;
+        min-width: 36px;
+        min-height: 36px;
         border-radius: 8px;
     }
 
@@ -255,6 +257,7 @@
 
     .info-item {
         gap: 12px;
+        align-items: center;
     }
 
     .info-val {
@@ -397,7 +400,9 @@
 }
 
 @keyframes btn-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .btn:disabled {
@@ -409,4 +414,56 @@
 .cf-submit-btn {
     width: 100%;
     justify-content: center;
+}
+
+/* ── Phone input with country-code prefix ─────────────────────────────────── */
+.phone-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.phone-input-wrap:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background: var(--surface);
+}
+
+.phone-prefix {
+    padding: 12px 12px 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.03);
+    border-right: 1px solid var(--border);
+    user-select: none;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.phone-input-wrap input {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    flex: 1;
+    min-width: 0;
+    padding-left: 12px;
+}
+
+.phone-input-wrap input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.phone-input-wrap input.input-error {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.phone-input-wrap:has(input.input-error) {
+    border-color: rgba(239, 68, 68, 0.55);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
 }

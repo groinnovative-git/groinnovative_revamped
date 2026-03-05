@@ -186,12 +186,28 @@
 }
 
 .mobile-menu-header {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.gi-close-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
+    justify-content: center;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.gi-close-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .mobile-menu-header .theme-toggle {
