@@ -58,16 +58,16 @@ const packages = [
 
 // Framer Motion Variants
 const fadeInUp = {
-    hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } }
 }
 const containerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } }
 }
 const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } }
 }
 
 export default function Services() {
@@ -189,13 +189,14 @@ export default function Services() {
                         className="services-list"
                         variants={containerVariants}
                         initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.1 }}
+                        animate="visible"
                     >
-                        {services.map((s) => (
+                        {services.map((s, i) => (
                             <motion.div
                                 key={s.title}
-                                variants={cardVariants}
+                                variants={i === 0 ? undefined : cardVariants}
+                                initial={i === 0 ? { opacity: 1, y: 0 } : undefined}
+                                animate={i === 0 ? { opacity: 1, y: 0 } : undefined}
                                 className="svc-card"
                             >
                                 <div className="svc-left">

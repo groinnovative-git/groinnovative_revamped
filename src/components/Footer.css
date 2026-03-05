@@ -134,29 +134,7 @@
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 40px;
-        text-align: center;
-    }
-
-    .footer-brand {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .gi-footer .gi-logo,
-    .footer-socials,
-    .footer-contact-list {
-        justify-content: center;
-    }
-
-    .footer-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .footer-col ul {
-        align-items: center;
+        text-align: left;
     }
 
     .footer-bottom {
