@@ -47,6 +47,12 @@
     radial-gradient(at 30% 85%, rgba(5, 150, 105, 0.2) 0px, transparent 55%);
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --nav-h: 68px;
+  }
+}
+
 /* ── Reset ── */
 *,
 *::before,

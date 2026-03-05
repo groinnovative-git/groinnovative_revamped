@@ -1,147 +1,169 @@
-/* GRO INNOVATIVE — Navbar */
+/* ============================================
+   GRO INNOVATIVE — Navbar
+   Layout : [Logo LEFT] ··· [Pill RIGHT]
+   Behaviour: hide on scroll-down, show on scroll-up
+   ============================================ */
+
+/* ── Base ── */
 .gi-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    height: var(--nav-h);
-    background: rgba(10, 10, 10, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, box-shadow 0.3s, background 0.4s;
+    padding: 12px 0;
+    background: transparent;
+
+    /* Default transition: used when showing (sliding DOWN into view) */
+    transform: translateY(0);
+    transition:
+        transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+        /* Smooth ease-out */
+        background 350ms ease,
+        backdrop-filter 350ms ease,
+        border-color 350ms ease;
+    will-change: transform;
 }
 
+/* Scroll-down → slide navbar off the top */
+.gi-nav.nav-hidden {
+    transform: translateY(-120%);
+    /* Use an accelerating ease-in when hiding so it gets out of the way naturally */
+    transition: transform 300ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Scrolled → add blur background */
 .gi-nav.scrolled {
-    border-color: var(--border);
-    box-shadow: var(--shadow-sm);
-    background: rgba(10, 10, 10, 0.85);
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .gi-nav {
+        transition: background 0.35s ease;
+    }
+}
+
+/* ── Single-row inner ── */
 .gi-nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
-    height: 100%;
 }
 
-/* Logo */
+/* ── LEFT — Logo ── */
 .gi-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
 }
 
-.gi-logo-mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, var(--primary) 0%, #34D399 100%);
+/* Logo image — changing height here NEVER affects the pill */
+.gi-logo-img {
+    height: 80px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* ── RIGHT — Actions wrapper ── */
+.gi-nav-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
+    flex-shrink: 0;
+    gap: 12px;
 }
 
-.gi-logo-text {
+/* ── FLOATING PILL ── */
+.gi-nav-pill {
     display: flex;
-    flex-direction: column;
-    line-height: 1.1;
+    align-items: center;
+    width: max-content;
+    gap: 8px;
+    background: rgba(14, 14, 14, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* slightly softer border */
+    border-radius: 100px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 6px 6px 6px 12px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.gi-logo-name {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text);
-}
-
-.gi-logo-sub {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-}
-
-/* Nav links */
+/* ── Nav links inside pill ── */
 .gi-links {
     display: flex;
     align-items: center;
-    gap: 8px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    gap: 6px;
+    padding: 0 4px;
 }
 
 .gi-link {
-    position: relative;
-    padding: 8px 16px;
+    padding: 10px 18px;
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--muted);
-    transition: color 0.3s ease;
+    border-radius: 100px;
     white-space: nowrap;
-}
-
-.gi-link::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 16px;
-    right: 16px;
-    height: 2px;
-    background: var(--primary);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gi-link:hover {
     color: var(--text);
-}
-
-.gi-link:hover::after,
-.gi-link.active::after {
-    transform: scaleX(1);
-    transform-origin: left;
+    background: rgba(255, 255, 255, 0.07);
 }
 
 .gi-link.active {
     color: var(--primary);
     font-weight: 600;
+    background: rgba(16, 185, 129, 0.1);
 }
 
-/* Right section */
-.gi-nav-right {
+/* ── CTA button inside pill ── */
+.gi-pill-cta {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
+    padding: 9px 20px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+    margin-left: 4px;
     flex-shrink: 0;
 }
 
-
-/* CTA */
-.gi-nav-cta {
-    flex-shrink: 0;
+.gi-pill-cta:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
 }
 
-/* Hamburger */
+/* ── Hamburger (mobile / tablet) ── */
 .gi-ham {
     display: none;
     flex-direction: column;
     gap: 5px;
-    padding: 6px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.gi-ham:hover {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .gi-ham span {
     display: block;
-    width: 22px;
+    width: 24px;
     height: 2px;
     background: var(--text);
     border-radius: 2px;
@@ -162,27 +184,32 @@
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile menu */
+/* ============================================
+   MOBILE SLIDE-IN MENU
+   ============================================ */
 .gi-mobile-menu {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 0;
     right: 0;
-    background: var(--surface);
-    padding: 24px;
+    width: min(300px, 80vw);
+    background: #0a0a0a;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 80px 28px 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* Centering items */
-    justify-content: center;
-    /* Centering vertically */
-    gap: 16px;
-    /* Increased gap */
+    align-items: flex-start;
+    gap: 6px;
     transform: translateX(110%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
     z-index: 2000;
     visibility: hidden;
+    box-shadow: -16px 0 48px rgba(0, 0, 0, 0.6);
+}
+
+.gi-mobile-menu.open {
+    transform: translateX(0);
+    visibility: visible;
 }
 
 .mobile-menu-header {
@@ -210,69 +237,79 @@
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-.mobile-menu-header .theme-toggle {
-    width: auto;
-    padding: 0 16px;
-    gap: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.gi-mobile-menu.open {
-    transform: translateX(0);
-    visibility: visible;
-}
-
 .gi-mobile-link {
-    position: relative;
-    padding: 12px 16px;
-    font-size: 1.2rem;
-    /* Slighly larger */
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--muted);
-    transition: all 0.2s;
-    text-align: center;
-}
-
-.gi-mobile-link::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    /* Center the underline */
-    transform: translateX(-50%) scaleX(0);
-    width: 24px;
-    height: 2px;
-    background: var(--primary);
-    transition: transform 0.3s ease;
+    border-radius: 10px;
+    transition: color 0.2s, background 0.2s;
 }
 
 .gi-mobile-link:hover {
     color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .gi-mobile-link.active {
     color: var(--primary);
-    font-weight: 600;
+    background: rgba(16, 185, 129, 0.08);
 }
 
-.gi-mobile-link.active::after {
-    transform: translateX(-50%) scaleX(1);
+.mobile-cta-wrapper {
+    width: 100%;
+    margin-top: 20px;
 }
 
 .gi-mobile-menu .btn {
-    margin-top: 12px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
 
-    .gi-links,
-    .gi-nav-cta {
+/* ── Tablet ≤ 1024px: hide pill, show hamburger ── */
+@media (max-width: 1024px) {
+    .gi-nav-pill {
         display: none;
     }
 
     .gi-ham {
         display: flex;
+    }
+
+    .gi-logo-img {
+        height: 60px;
+    }
+
+    .gi-nav {
+        padding: 10px 0;
+    }
+}
+
+/* ── Mobile ≤ 768px ── */
+@media (max-width: 768px) {
+    .gi-logo-img {
+        height: 50px;
+    }
+
+    .gi-nav {
+        padding: 8px 0;
+    }
+}
+
+/* ── Small mobile ≤ 480px ── */
+@media (max-width: 480px) {
+    .gi-logo-img {
+        height: 42px;
+    }
+}
+
+/* ── Desktop ≥ 1025px: always hide hamburger ── */
+@media (min-width: 1025px) {
+    .gi-ham {
+        display: none;
     }
 }

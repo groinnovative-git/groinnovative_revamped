@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import './Footer.css'
+import logoImg from '../assets/logo.png'
 
 const services = ['Web Development', 'Mobile Apps', 'Cloud Solutions', 'Digital Marketing', 'Logo Design', 'IT Consulting']
-const company = ['About Us', 'How It Works', 'Pricing', 'Reviews', 'Contact']
+const company = ['About Us', 'Services', 'Contact']
 const social = [
     { icon: '𝕏', label: 'Twitter', href: '#' },
     { icon: 'in', label: 'LinkedIn', href: '#' },
@@ -16,12 +17,9 @@ export default function Footer() {
                 <div className="footer-grid">
                     {/* Brand */}
                     <div className="footer-brand">
-                        <div className="gi-logo" style={{ marginBottom: 16 }}>
-                            <div className="gi-logo-mark"><span>G</span></div>
-                            <div className="gi-logo-text">
-                                <span className="gi-logo-name">GroInnovative</span>
-                            </div>
-                        </div>
+                        <Link to="/" className="gi-logo" onClick={() => window.scrollTo(0, 0)} style={{ marginBottom: 16, display: 'inline-block' }}>
+                            <img src={logoImg} alt="GroInnovative" className="gi-logo-img" style={{ height: '64px', width: 'auto', display: 'block' }} />
+                        </Link>
                         <p className="footer-tagline">
                             We build software that scales.<br />
                             Trusted by 50+ clients.
@@ -56,9 +54,6 @@ export default function Footer() {
                             <li> +91 9345306018 , +91 9003343806</li>
                             <li> Coimbatore, Tamil Nadu, India</li>
                         </ul>
-                        <Link to="/contact" className="btn btn-primary btn-sm" style={{ marginTop: 16, display: 'inline-flex' }}>
-                            Start a Project
-                        </Link>
                     </div>
                 </div>
                 <div className="footer-bottom">

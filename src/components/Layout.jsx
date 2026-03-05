@@ -8,6 +8,11 @@ export default function Layout() {
     const { pathname } = useLocation()
     const [showTop, setShowTop] = useState(false)
 
+    // Normalize path (remove trailing slash except for Root)
+    const currentPath = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname
+    const validRoutes = ['/', '/about', '/services', '/contact']
+    const showFooter = validRoutes.includes(currentPath)
+
     // Scroll to top on route change
     useEffect(() => { window.scrollTo(0, 0) }, [pathname])
 
@@ -27,7 +32,8 @@ export default function Layout() {
             <main>
                 <Outlet />
             </main>
-            <Footer />
+
+            {showFooter && <Footer />}
 
             {/* Scroll-to-top FAB */}
             <button

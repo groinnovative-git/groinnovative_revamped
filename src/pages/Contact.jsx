@@ -234,7 +234,8 @@ export default function Contact() {
                                         <div className="info-icon">{item.icon}</div>
                                         <div>
                                             <span className="info-label">{item.label}</span>
-                                            <span className="info-val">{item.val}</span>
+                                            <span className="info-val" style={{ display: 'block', marginBottom: '2px' }}>{item.val}</span>
+                                            {item.val2 && <span className="info-val" style={{ display: 'block' }}>{item.val2}</span>}
                                         </div>
                                     </div>
                                 ))}
