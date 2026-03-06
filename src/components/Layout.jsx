@@ -13,8 +13,10 @@ export default function Layout() {
     const validRoutes = ['/', '/about', '/services', '/contact']
     const showFooter = validRoutes.includes(currentPath)
 
-    // Scroll to top on route change
-    useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+    // Scroll to top instantly on route change to prevent "two scroll" jump issue
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    }, [pathname])
 
     // Show scroll-to-top button after 300px scroll
     useEffect(() => {
